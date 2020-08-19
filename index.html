@@ -118,7 +118,12 @@
     
     let startingContent = getRawContent();
     
-    let editor = startEditor(editorId, startingContent);
+    let editor = startEditor(editorId, {
+      data: startingContent,
+      onChange() {
+        generateResult();
+      },
+    });
     
     showResult(startingContent);
     

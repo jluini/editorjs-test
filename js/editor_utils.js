@@ -1,4 +1,4 @@
-function startEditor(editorId, initialData) {
+function startEditor(editorId, options) {
   let config = {
     holder: editorId,
     autofocus: true,
@@ -10,11 +10,8 @@ function startEditor(editorId, initialData) {
       },
       image: SimpleImage,
     },
+    ...options
   };
-  
-  if(initialData) {
-    config.data = initialData;
-  }
   
   return new EditorJS(config);
 }
@@ -29,7 +26,7 @@ function getEditorData(callback) {
 
 function parseEditorData(data) {
   return {
-    html: blocksToHtml(data.blocks) //`<h1>Este sería el &lt;resultado&gt; (${data.time})</h1>`
+    html: blocksToHtml(data.blocks)
   };
 }
 
