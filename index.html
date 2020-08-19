@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Prueba de editorjs</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="columns">
+    <button class="arrow-button raw-to-editor" onclick="setEditorData()"></button>
+    <button class="arrow-button editor-to-raw" onclick="showEditorData()"></button>
+    <button class="refresh-button" onclick="generateResult()"></button>
+    <div class="column input-column">
+      <h1 class="column-title">Contenido crudo</h1>
+      <div>
+        <textarea id="code-area">
+{
+  "time": 1597869459522,
+  "blocks": [
+    {
+      "type": "header",
+      "data": {
+        "text": "Título de nivel 1",
+        "level": 1
+      }
+    },
+    {
+      "type": "paragraph",
+      "data": {
+        "text": "Párrafo común."
+      }
+    },
+    {
+      "type": "paragraph",
+      "data": {
+        "text": "Otro párrafo. Éste contiene un <a href=\"http:www.google.com\">link</a>&nbsp;a google."
+      }
+    },
+    {
+      "type": "header",
+      "data": {
+        "text": "Título de nivel 2",
+        "level": 2
+      }
+    },
+    {
+      "type": "paragraph",
+      "data": {
+        "text": "Más párrafos comunes."
+      }
+    },
+    {
+      "type": "paragraph",
+      "data": {
+        "text": "A continuación una lista no-ordenada:"
+      }
+    },
+    {
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "items": [
+          "Primer ítem",
+          "Segundo ítem <b>destacado</b>",
+          "Tercer ítem <i>con cursiva</i>"
+        ]
+      }
+    },
+    {
+      "type": "paragraph",
+      "data": {
+        "text": "Ahora una lista ordenada:"
+      }
+    },
+    {
+      "type": "list",
+      "data": {
+        "style": "ordered",
+        "items": [
+          "Ítem número uno",
+          "Ítem número dos con <a href=\"http:www.google.com\">otro link</a>"
+        ]
+      }
+    }
+  ],
+  "version": "2.18.0"
+}
+        </textarea>
+      </div>
+    </div>
+    <div class="column editor-column">
+      <h1 class="column-title">Editor</h1>
+      
+      <div id="editor-container"></div>
+    </div>
+    <div class="column html-column">
+      <h1 class="column-title">Resultado</h1>
+      <div id="result-container">
+        <h2>Acá va el resultado</h2>
+      </div>
+    </div>
+  </div>
+  
+  <script type="text/javascript" src="js/editor.js"></script>
+  <script type="text/javascript" src="js/header.js"></script>
+  <script type="text/javascript" src="js/list.js"></script>
+  <script type="text/javascript" src="js/simple-image.js"></script>
+  
+  <script type="text/javascript" src="js/editor_utils.js"></script>
+  
+  <script type="text/javascript">
+    const codeArea = document.getElementById("code-area");
+    const resultContainer = document.getElementById("result-container");
+    const editorId = "editor-container";
+    
+    let startingContent = getRawContent();
+    
+    let editor = startEditor(editorId, startingContent);
+    
+    showResult(startingContent);
+    
+    function showEditorData() {
+      getEditorData((data) => {
+        let prettyCode = JSON.stringify(data, null, 2);
+        codeArea.value = prettyCode;
+      });
+    }
+    
+    function setEditorData() {
+      let content = getRawContent();
+      if(typeof content == "object" && content.blocks) {
+        editor.render(content);
+      } else {
+        console.warn("Can't parse content as a json object with a 'blocks' attribute");
+      }
+    }
+    
+    function getRawContent() {
+      return JSON.parse(codeArea.value);
+    }
+    
+    function generateResult() {
+      getEditorData((data) => {
+        if(data.error) {
+          resultContainer.innerHTML = `Error: ${data.error}`;
+        } else {
+          showResult(data);
+        }
+      });
+    }
+    
+    function showResult(data) {
+      resultContainer.innerHTML = parseEditorData(data).html;
+    }
+  </script>
+</body>
+</html>
