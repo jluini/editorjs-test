@@ -22,6 +22,10 @@ html, body {
   text-align: center;
 }
 
+.template-list {
+  text-align: center;
+}
+
 #code-area {
   background-color: #0000001c;
   width: 100%;
@@ -44,6 +48,10 @@ html, body {
   padding: 1em;
   border-radius: 2em;
   margin-top: 30px;
+}
+.result-placeholder {
+  color: gray;
+  text-align: center;
 }
 
 .arrow-button {
