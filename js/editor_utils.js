@@ -2,14 +2,6 @@ function startEditor(editorId, options) {
   let config = {
     holder: editorId,
     autofocus: true,
-    tools: {
-      header: Header,
-      list: {
-        class: List,
-        inlineToolbar: true,
-      },
-      image: SimpleImage,
-    },
     ...options
   };
   
