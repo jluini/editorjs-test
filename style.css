@@ -15,7 +15,7 @@ html, body {
   padding: 1em;
 }
 .input-column  { background-color: #eeeeee; width: 30%; }
-.editor-column { background-color: #eeeeee; width: 40%; }
+.editor-column { background-color: #cfcfcf; width: 40%; }
 .html-column   { background-color: #eeeeee; width: 30%; }
 
 .column-title {
@@ -34,7 +34,7 @@ html, body {
 }
 
 #editor-container {
-  background-color: #0000001c;
+  background-color: white;
   padding: 1em;
   border-radius: 2em;
 }
